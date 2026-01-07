@@ -3,9 +3,11 @@ const queryInput = document.getElementById("query");
 const baseUrlInput = document.getElementById("base-url");
 const statusEl = document.getElementById("status");
 const pasteBtn = document.getElementById("paste-btn");
+const themeToggle = document.getElementById("theme-toggle");
 const chips = document.querySelectorAll(".chip");
 
 const DEFAULT_BASE_URL = "https://g.ai";
+const THEME_KEY = "gai_theme";
 
 const loadBaseUrl = () => {
   const saved = localStorage.getItem("gai_base_url");
@@ -49,6 +51,13 @@ const launchQuery = (query) => {
   window.location.assign(finalUrl);
 };
 
+const applyTheme = (theme) => {
+  const nextTheme = theme === "light" ? "light" : "dark";
+  document.body.dataset.theme = nextTheme;
+  themeToggle.textContent = nextTheme === "dark" ? "Light mode" : "Dark mode";
+  localStorage.setItem(THEME_KEY, nextTheme);
+};
+
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   const query = queryInput.value.trim();
@@ -90,5 +99,11 @@ pasteBtn.addEventListener("click", async () => {
   }
 });
 
+themeToggle.addEventListener("click", () => {
+  const current = document.body.dataset.theme || "dark";
+  applyTheme(current === "dark" ? "light" : "dark");
+});
+
 loadBaseUrl();
+applyTheme(localStorage.getItem(THEME_KEY) || "dark");
 queryInput.focus();

@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,600&family=Unbounded:wght@500;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
@@ -15,8 +15,13 @@
   <body>
     <main class="stage">
       <section class="panel">
-        <header class="hero">
-          <p class="eyebrow">G.AI Quick Launch</p>
+        <header class="hero reveal" data-delay="0">
+          <div class="hero-top">
+            <p class="eyebrow">G.AI Quick Launch</p>
+            <button type="button" class="toggle" id="theme-toggle">
+              Light mode
+            </button>
+          </div>
           <h1>Search in AI mode fast.</h1>
           <p class="subhead">
             Type a query, tap launch, and jump straight into G.AI. Built for
@@ -24,7 +29,7 @@
           </p>
         </header>
 
-        <form class="search" id="search-form" autocomplete="off">
+        <form class="search reveal" id="search-form" autocomplete="off" data-delay="1">
           <label class="sr-only" for="query">Search query</label>
           <input
             id="query"
@@ -42,7 +47,7 @@
           </div>
         </form>
 
-        <div class="chips" aria-label="Quick examples">
+        <div class="chips reveal" aria-label="Quick examples" data-delay="2">
           <button type="button" class="chip" data-query="Explain the water cycle like I'm 10">
             Water cycle
           </button>
@@ -54,7 +59,7 @@
           </button>
         </div>
 
-        <details class="settings">
+        <details class="settings reveal" data-delay="3">
           <summary>Settings</summary>
           <div class="settings-body">
             <label for="base-url">G.AI base URL</label>
@@ -71,7 +76,7 @@
           </div>
         </details>
 
-        <div class="status" role="status" aria-live="polite" id="status"></div>
+        <div class="status reveal" role="status" aria-live="polite" id="status" data-delay="4"></div>
       </section>
     </main>
 
