@@ -228,6 +228,10 @@ button:active {
   border: 1px solid var(--border);
 }
 
+.settings.info {
+  background: linear-gradient(140deg, rgba(46, 134, 255, 0.12), rgba(0, 185, 92, 0.08));
+}
+
 .settings summary {
   cursor: pointer;
   font-weight: 600;
@@ -252,6 +256,15 @@ button:active {
   margin: 0;
   color: var(--muted);
   font-size: 0.8rem;
+}
+
+.settings a {
+  color: var(--cool);
+  text-decoration: none;
+}
+
+.settings a:hover {
+  text-decoration: underline;
 }
 
 .hint span {
@@ -316,6 +329,10 @@ button:active {
 
 .reveal[data-delay="4"] {
   animation-delay: 0.42s;
+}
+
+.reveal[data-delay="5"] {
+  animation-delay: 0.52s;
 }
 
 @media (max-width: 520px) {
