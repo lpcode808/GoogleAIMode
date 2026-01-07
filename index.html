@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>G.AI Quick Launch</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;700&family=Space+Grotesk:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="stage">
+      <section class="panel">
+        <header class="hero">
+          <p class="eyebrow">G.AI Quick Launch</p>
+          <h1>Search in AI mode fast.</h1>
+          <p class="subhead">
+            Type a query, tap launch, and jump straight into G.AI. Built for
+            quick mobile use.
+          </p>
+        </header>
+
+        <form class="search" id="search-form" autocomplete="off">
+          <label class="sr-only" for="query">Search query</label>
+          <input
+            id="query"
+            name="query"
+            type="search"
+            placeholder="Ask anything: trends, homework help, trip planning..."
+            autocomplete="off"
+            enterkeyhint="search"
+            inputmode="search"
+            required
+          />
+          <div class="actions">
+            <button type="button" class="ghost" id="paste-btn">Paste</button>
+            <button type="submit" class="primary">Launch G.AI</button>
+          </div>
+        </form>
+
+        <div class="chips" aria-label="Quick examples">
+          <button type="button" class="chip" data-query="Explain the water cycle like I'm 10">
+            Water cycle
+          </button>
+          <button type="button" class="chip" data-query="Plan a 2-day Tokyo food crawl">
+            Tokyo food crawl
+          </button>
+          <button type="button" class="chip" data-query="Summarize today's tech headlines">
+            Tech headlines
+          </button>
+        </div>
+
+        <details class="settings">
+          <summary>Settings</summary>
+          <div class="settings-body">
+            <label for="base-url">G.AI base URL</label>
+            <input
+              id="base-url"
+              name="base-url"
+              type="url"
+              placeholder="https://g.ai"
+            />
+            <p class="hint">
+              We'll append <span>q=</span> to whatever you set. Example:
+              <span>https://g.ai</span>
+            </p>
+          </div>
+        </details>
+
+        <div class="status" role="status" aria-live="polite" id="status"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
