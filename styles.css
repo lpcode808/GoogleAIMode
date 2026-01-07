@@ -1,36 +1,47 @@
 :root {
   color-scheme: dark;
-  --bg: #0b0d13;
-  --bg-glow: radial-gradient(circle at 10% 10%, rgba(255, 126, 45, 0.2), transparent 45%);
-  --panel: #141720;
-  --panel-soft: #1a1f2b;
-  --ink: #f6f1e9;
-  --muted: #b6b2ab;
-  --accent: #ff7a2d;
-  --accent-deep: #ff2f00;
-  --cool: #5ad7ff;
+  --gemini-blue: #2e86ff;
+  --gemini-blue-soft: #749bff;
+  --gemini-green: #00b95c;
+  --gemini-yellow: #fbbc04;
+  --gemini-red: #fc413d;
+  --bg: #0b0f16;
+  --bg-glow: radial-gradient(circle at 15% 10%, rgba(46, 134, 255, 0.3), transparent 50%),
+    radial-gradient(circle at 80% 15%, rgba(252, 65, 61, 0.18), transparent 50%),
+    radial-gradient(circle at 20% 80%, rgba(0, 185, 92, 0.2), transparent 45%);
+  --panel: #141a24;
+  --panel-soft: #1c2431;
+  --ink: #f5f7fb;
+  --muted: #b5bac7;
+  --accent: #2e86ff;
+  --accent-deep: #00b95c;
+  --cool: #fbbc04;
   --chip: rgba(255, 255, 255, 0.06);
-  --input: #11141d;
-  --border: rgba(255, 255, 255, 0.08);
-  --shadow: 0 28px 70px rgba(5, 7, 12, 0.6);
+  --input: #0f141d;
+  --border: rgba(255, 255, 255, 0.1);
+  --grid: rgba(255, 255, 255, 0.04);
+  --shadow: 0 30px 80px rgba(3, 6, 12, 0.65);
   --radius: 26px;
 }
 
 body[data-theme="light"] {
   color-scheme: light;
-  --bg: #f4efe6;
-  --bg-glow: radial-gradient(circle at 85% 12%, rgba(255, 128, 0, 0.25), transparent 45%);
-  --panel: #f9f5ef;
-  --panel-soft: #f0e9df;
-  --ink: #1a1510;
-  --muted: #5f5b55;
-  --accent: #ff6a00;
-  --accent-deep: #ff2f00;
-  --cool: #0070b8;
+  --bg: #f5f7fb;
+  --bg-glow: radial-gradient(circle at 10% 10%, rgba(46, 134, 255, 0.2), transparent 55%),
+    radial-gradient(circle at 85% 15%, rgba(252, 65, 61, 0.16), transparent 55%),
+    radial-gradient(circle at 20% 80%, rgba(0, 185, 92, 0.16), transparent 50%);
+  --panel: #ffffff;
+  --panel-soft: #f0f3f9;
+  --ink: #11151c;
+  --muted: #4d5460;
+  --accent: #2e86ff;
+  --accent-deep: #fc413d;
+  --cool: #00b95c;
   --chip: rgba(0, 0, 0, 0.04);
-  --input: #ffffff;
-  --border: rgba(0, 0, 0, 0.1);
-  --shadow: 0 24px 60px rgba(34, 26, 18, 0.18);
+  --input: #f6f8fc;
+  --border: rgba(0, 0, 0, 0.08);
+  --grid: rgba(0, 0, 0, 0.04);
+  --shadow: 0 22px 50px rgba(34, 45, 66, 0.18);
 }
 
 * {
@@ -39,7 +50,7 @@ body[data-theme="light"] {
 
 body {
   margin: 0;
-  font-family: "Newsreader", "Georgia", serif;
+  font-family: "Archivo", "Segoe UI", sans-serif;
   color: var(--ink);
   background: var(--bg);
   min-height: 100vh;
@@ -52,7 +63,10 @@ body {
   padding: 32px 20px 56px;
   position: relative;
   overflow: hidden;
-  background-image: var(--bg-glow);
+  background-image: var(--bg-glow),
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: auto, 140px 140px, 140px 140px;
 }
 
 .stage::before,
@@ -68,7 +82,7 @@ body {
 .stage::before {
   width: 260px;
   height: 260px;
-  background: radial-gradient(circle, rgba(255, 122, 45, 0.45), transparent 70%);
+  background: radial-gradient(circle, rgba(46, 134, 255, 0.45), transparent 70%);
   top: -80px;
   right: -40px;
 }
@@ -76,7 +90,7 @@ body {
 .stage::after {
   width: 320px;
   height: 320px;
-  background: radial-gradient(circle, rgba(90, 215, 255, 0.3), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 185, 92, 0.32), transparent 70%);
   bottom: -120px;
   left: -80px;
 }
@@ -112,11 +126,11 @@ body {
   font-size: 0.7rem;
   color: var(--cool);
   margin: 0;
-  font-family: "Unbounded", "Trebuchet MS", sans-serif;
+  font-family: "Syne", "Trebuchet MS", sans-serif;
 }
 
 .hero h1 {
-  font-family: "Unbounded", "Trebuchet MS", sans-serif;
+  font-family: "Syne", "Trebuchet MS", sans-serif;
   font-size: clamp(2rem, 6vw, 2.6rem);
   margin: 0;
 }
@@ -147,7 +161,7 @@ body {
 .search input[type="search"]:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255, 122, 45, 0.25);
+  box-shadow: 0 0 0 3px rgba(46, 134, 255, 0.3);
 }
 
 .actions {
@@ -171,9 +185,9 @@ button:active {
 }
 
 .primary {
-  background: linear-gradient(120deg, var(--accent), var(--accent-deep));
+  background: linear-gradient(120deg, var(--accent), var(--gemini-green), var(--gemini-yellow));
   color: white;
-  box-shadow: 0 12px 26px rgba(255, 90, 0, 0.3);
+  box-shadow: 0 14px 30px rgba(46, 134, 255, 0.35);
 }
 
 .ghost {
