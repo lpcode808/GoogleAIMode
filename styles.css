@@ -156,6 +156,7 @@ body {
   font-family: inherit;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   color: var(--ink);
+  min-height: 54px;
 }
 
 .search input[type="search"]:focus {
@@ -166,7 +167,7 @@ body {
 
 .actions {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr 1fr 2fr;
   gap: 12px;
 }
 
@@ -174,10 +175,14 @@ button {
   font-family: inherit;
   font-weight: 600;
   border-radius: 999px;
-  padding: 12px 16px;
+  padding: 12px 20px;
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 button:active {
@@ -215,7 +220,7 @@ button:active {
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
 }
 
 .chip {
@@ -233,6 +238,25 @@ button:active {
   color: white;
   transform: scale(1.05);
   border-color: var(--accent);
+}
+
+.history-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.history-chip {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ghost.small {
+  font-size: 0.8rem;
+  padding: 6px 12px;
 }
 
 .settings {
@@ -363,12 +387,20 @@ button:active {
   animation-delay: 0.52s;
 }
 
+.reveal[data-delay="6"] {
+  animation-delay: 0.62s;
+}
+
 @media (max-width: 520px) {
   .panel {
     padding: 26px 20px 24px;
   }
 
   .actions {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .actions button[type="submit"] {
+    grid-column: 1 / -1;
   }
 }
