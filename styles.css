@@ -235,6 +235,25 @@ button:active {
   border-color: var(--accent);
 }
 
+.history-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.history-chip {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ghost.small {
+  font-size: 0.8rem;
+  padding: 6px 12px;
+}
+
 .settings {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 18px;
@@ -361,6 +380,10 @@ button:active {
 
 .reveal[data-delay="5"] {
   animation-delay: 0.52s;
+}
+
+.reveal[data-delay="6"] {
+  animation-delay: 0.62s;
 }
 
 @media (max-width: 520px) {

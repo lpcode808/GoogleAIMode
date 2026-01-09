@@ -19,7 +19,7 @@
           <div class="hero-top">
             <p class="eyebrow">G.AI Quick Launch</p>
             <button type="button" class="toggle" id="theme-toggle">
-              Light mode
+              ☀️ Light
             </button>
           </div>
           <h1>Search in AI mode fast.</h1>
@@ -62,7 +62,15 @@
           </button>
         </div>
 
-        <details class="settings reveal" data-delay="3">
+        <details class="settings history reveal" data-delay="3" id="history-section">
+          <summary>Recent Searches</summary>
+          <div class="settings-body">
+            <div id="history-list" class="history-chips"></div>
+            <button type="button" class="ghost small" id="clear-history">Clear History</button>
+          </div>
+        </details>
+
+        <details class="settings reveal" data-delay="4">
           <summary>Settings</summary>
           <div class="settings-body">
             <label for="base-url">G.AI base URL</label>
@@ -80,7 +88,7 @@
           </div>
         </details>
 
-        <details class="settings info reveal" data-delay="4">
+        <details class="settings info reveal" data-delay="5">
           <summary>What is Gemini AI Mode?</summary>
           <div class="settings-body">
             <p>
@@ -103,7 +111,7 @@
           </div>
         </details>
 
-        <div class="status reveal" role="status" aria-live="polite" id="status" data-delay="5"></div>
+        <div class="status reveal" role="status" aria-live="polite" id="status" data-delay="6"></div>
       </section>
     </main>
 

@@ -10,6 +10,8 @@ const urlError = document.getElementById("url-error");
 
 const DEFAULT_BASE_URL = "https://g.ai";
 const THEME_KEY = "gai_theme";
+const HISTORY_KEY = "gai_query_history";
+const MAX_HISTORY = 10;
 
 const validateUrl = (url) => {
   const trimmed = url.trim();
@@ -82,15 +84,80 @@ const launchQuery = (query) => {
   launchBtn.textContent = "Launching...";
   statusEl.textContent = "Opening G.AI…";
 
-  window.location.assign(finalUrl);
+  // Open in new tab
+  window.open(finalUrl, "_blank");
+
+  // Reset button state after a short delay
+  setTimeout(() => {
+    launchBtn.disabled = false;
+    launchBtn.textContent = launchBtn.dataset.originalText || "Launch G.AI";
+    statusEl.textContent = "";
+  }, 1000);
+
   return true;
 };
 
 const applyTheme = (theme) => {
   const nextTheme = theme === "light" ? "light" : "dark";
   document.body.dataset.theme = nextTheme;
-  themeToggle.textContent = nextTheme === "dark" ? "Light mode" : "Dark mode";
+  // Update button with icon and text
+  themeToggle.innerHTML = nextTheme === "dark" ? '☀️ Light' : '🌙 Dark';
   localStorage.setItem(THEME_KEY, nextTheme);
+};
+
+// Query history management
+const getHistory = () => {
+  const history = localStorage.getItem(HISTORY_KEY);
+  return history ? JSON.parse(history) : [];
+};
+
+const saveToHistory = (query) => {
+  const trimmed = query.trim();
+  if (!trimmed) return;
+
+  let history = getHistory();
+  // Remove if already exists
+  history = history.filter(q => q !== trimmed);
+  // Add to front
+  history.unshift(trimmed);
+  // Keep only MAX_HISTORY items
+  history = history.slice(0, MAX_HISTORY);
+  localStorage.setItem(HISTORY_KEY, JSON.stringify(history));
+  renderHistory();
+};
+
+const clearHistory = () => {
+  localStorage.removeItem(HISTORY_KEY);
+  renderHistory();
+  statusEl.textContent = "History cleared.";
+};
+
+const renderHistory = () => {
+  const historyList = document.getElementById("history-list");
+  const historySection = document.getElementById("history-section");
+  const history = getHistory();
+
+  if (history.length === 0) {
+    historySection.style.display = "none";
+    return;
+  }
+
+  historySection.style.display = "";
+  historyList.innerHTML = "";
+
+  history.forEach((query) => {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "chip history-chip";
+    chip.textContent = query.length > 50 ? query.substring(0, 50) + "..." : query;
+    chip.title = query;
+    chip.addEventListener("click", () => {
+      queryInput.value = query;
+      queryInput.focus();
+      statusEl.textContent = "Loaded from history.";
+    });
+    historyList.appendChild(chip);
+  });
 };
 
 form.addEventListener("submit", (event) => {
@@ -102,6 +169,7 @@ form.addEventListener("submit", (event) => {
     return;
   }
   saveBaseUrl();
+  saveToHistory(query);
   launchQuery(query);
 });
 
@@ -181,6 +249,22 @@ themeToggle.addEventListener("click", () => {
   applyTheme(current === "dark" ? "light" : "dark");
 });
 
+// Clear history button
+const clearHistoryBtn = document.getElementById("clear-history");
+clearHistoryBtn.addEventListener("click", clearHistory);
+
 loadBaseUrl();
-applyTheme(localStorage.getItem(THEME_KEY) || "dark");
+
+// Auto-detect system theme preference on first load
+const savedTheme = localStorage.getItem(THEME_KEY);
+if (!savedTheme) {
+  const prefersLight = window.matchMedia("(prefers-color-scheme: light)").matches;
+  applyTheme(prefersLight ? "light" : "dark");
+} else {
+  applyTheme(savedTheme);
+}
+
+// Render history on load
+renderHistory();
+
 queryInput.focus();
