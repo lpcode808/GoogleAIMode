@@ -3,6 +3,7 @@ const queryInput = document.getElementById("query");
 const baseUrlInput = document.getElementById("base-url");
 const statusEl = document.getElementById("status");
 const pasteBtn = document.getElementById("paste-btn");
+const shareBtn = document.getElementById("share-btn");
 const themeToggle = document.getElementById("theme-toggle");
 const chips = document.querySelectorAll(".chip");
 const launchBtn = form.querySelector('button[type="submit"]');
@@ -244,6 +245,50 @@ pasteBtn.addEventListener("click", async () => {
   }
 });
 
+shareBtn.addEventListener("click", async () => {
+  const query = queryInput.value.trim();
+
+  if (!query) {
+    statusEl.textContent = "Enter a query to share.";
+    return;
+  }
+
+  // Generate shareable URL
+  const shareUrl = new URL(window.location.href);
+  shareUrl.searchParams.set('q', query);
+  const shareLink = shareUrl.toString();
+
+  // Try Web Share API first (mobile)
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'G.AI Quick Launch',
+        text: `Search: ${query}`,
+        url: shareLink
+      });
+      statusEl.textContent = "Shared successfully!";
+      return;
+    } catch (error) {
+      // User cancelled or share failed, fall through to clipboard
+      if (error.name !== 'AbortError') {
+        console.log('Share failed:', error);
+      }
+    }
+  }
+
+  // Fallback to clipboard
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(shareLink);
+      statusEl.textContent = "Link copied to clipboard!";
+    } catch (error) {
+      statusEl.textContent = "Failed to copy link.";
+    }
+  } else {
+    statusEl.textContent = "Sharing not supported.";
+  }
+});
+
 themeToggle.addEventListener("click", () => {
   const current = document.body.dataset.theme || "dark";
   applyTheme(current === "dark" ? "light" : "dark");
@@ -266,5 +311,13 @@ if (!savedTheme) {
 
 // Render history on load
 renderHistory();
+
+// Load query from URL parameter if present
+const urlParams = new URLSearchParams(window.location.search);
+const urlQuery = urlParams.get('q');
+if (urlQuery) {
+  queryInput.value = urlQuery;
+  statusEl.textContent = "Query loaded from shared link.";
+}
 
 queryInput.focus();
