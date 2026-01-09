@@ -9,9 +9,10 @@ A mobile-first one-page launcher that appends `q=` to a base G.AI URL and opens 
 - **Smart Paste**: Paste from clipboard - appends to existing text instead of replacing
 - **Quick Add-ons**: Pre-defined query modifiers (demystify, explain, analyze)
 - **Theme Toggle**: Light/dark mode with auto-detection of system preference
+- **URL Sharing**: Generate shareable links with pre-filled queries (Web Share API + clipboard)
 - **Customizable Base URL**: Change the G.AI endpoint in settings
 - **Real-time Validation**: URL validation with clear error messages
-- **Mobile-First Design**: Optimized for touch with accessible 44px+ targets
+- **Mobile-First Design**: Optimized for touch with 44px minimum touch targets
 - **Visual Feedback**: Loading states, button animations, status messages
 - **Privacy-Focused**: All data stored locally (localStorage only)
 
@@ -20,8 +21,12 @@ A mobile-first one-page launcher that appends `q=` to a base G.AI URL and opens 
 1. Open `index.html` in your browser
 2. Enter a search query
 3. (Optional) Click quick add-on chips to modify your query
-4. Tap **Launch G.AI** to open in a new tab
+4. Choose an action:
+   - **Launch G.AI**: Open query in new tab
+   - **Share**: Copy shareable link or use native share on mobile
+   - **Paste**: Insert text from clipboard
 5. Use **Recent Searches** to quickly re-launch previous queries
+6. Share links with `?q=query` parameter to pre-fill the search box
 
 ### Settings
 

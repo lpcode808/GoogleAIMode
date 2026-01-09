@@ -4,6 +4,29 @@ All notable changes to G.AI Quick Launch will be documented in this file.
 
 ## [Unreleased]
 
+### Phase 3: Polish (2026-01-09)
+
+#### Added
+- **URL Sharing**: New "Share" button creates shareable links with pre-filled queries
+- **Web Share API**: Native mobile sharing on supported devices
+- **Query Parameters**: Support for `?q=query` in URL to pre-fill search box
+- Shareable links for viral distribution and collaboration
+
+#### Changed
+- **Button Consistency**: All buttons standardized to 44px minimum height
+- **Touch Targets**: Improved spacing and sizing for mobile (44x44px minimum)
+- **Actions Layout**: Three-button layout (Paste, Share, Launch)
+- Search input height increased to 54px for better touch
+- Chip gaps increased from 10px to 12px
+
+#### Improved
+- Mobile layout: Paste/Share side-by-side, Launch full-width below
+- Better visual consistency across all interactive elements
+- Flexbox button centering for perfect alignment
+- Enhanced accessibility with larger touch areas
+
+---
+
 ### Phase 2: Quick Wins (2026-01-09)
 
 #### Added
