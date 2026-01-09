@@ -31,16 +31,14 @@
 
         <form class="search reveal" id="search-form" autocomplete="off" data-delay="1">
           <label class="sr-only" for="query">Search query</label>
-          <input
+          <textarea
             id="query"
             name="query"
-            type="search"
             placeholder="Ask anything: trends, homework help, trip planning..."
             autocomplete="off"
-            enterkeyhint="search"
-            inputmode="search"
             required
-          />
+            rows="1"
+          ></textarea>
           <div class="actions">
             <button type="button" class="ghost" id="paste-btn">Paste</button>
             <button type="button" class="ghost" id="share-btn">Share</button>

@@ -4,6 +4,23 @@ All notable changes to G.AI Quick Launch will be documented in this file.
 
 ## [Unreleased]
 
+### Auto-growing Textarea (2026-01-09)
+
+#### Changed
+- **Search Input**: Replaced single-line input with auto-growing textarea
+- Starts compact at 54px height (2 lines)
+- Grows smoothly as content increases
+- Max height of 200px (~6 lines) before scrolling
+- Better support for long, complex queries
+
+#### Improved
+- Multi-line queries now fully visible while typing
+- Smooth height transitions (0.2s ease)
+- Auto-resizes after paste, chip clicks, and history loads
+- Similar UX to modern messaging apps and Twitter/X
+
+---
+
 ### Phase 3: Polish (2026-01-09)
 
 #### Added

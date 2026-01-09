@@ -14,6 +14,12 @@ const THEME_KEY = "gai_theme";
 const HISTORY_KEY = "gai_query_history";
 const MAX_HISTORY = 10;
 
+// Auto-resize textarea
+const autoResize = () => {
+  queryInput.style.height = 'auto';
+  queryInput.style.height = Math.min(queryInput.scrollHeight, 200) + 'px';
+};
+
 const validateUrl = (url) => {
   const trimmed = url.trim();
   if (!trimmed) return { valid: true, error: "" }; // Empty is OK, will use default
@@ -154,12 +160,16 @@ const renderHistory = () => {
     chip.title = query;
     chip.addEventListener("click", () => {
       queryInput.value = query;
+      autoResize();
       queryInput.focus();
       statusEl.textContent = "Loaded from history.";
     });
     historyList.appendChild(chip);
   });
 };
+
+// Auto-resize on input
+queryInput.addEventListener("input", autoResize);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -209,6 +219,7 @@ chips.forEach((chip) => {
       statusEl.textContent = `Added "${addon}" to query.`;
     }
 
+    autoResize();
     queryInput.focus();
   });
 });
@@ -239,6 +250,7 @@ pasteBtn.addEventListener("click", async () => {
       statusEl.textContent = "Added to query.";
     }
 
+    autoResize();
     queryInput.focus();
   } catch (error) {
     statusEl.textContent = "Clipboard access denied.";
@@ -319,5 +331,8 @@ if (urlQuery) {
   queryInput.value = urlQuery;
   statusEl.textContent = "Query loaded from shared link.";
 }
+
+// Initial resize
+autoResize();
 
 queryInput.focus();
