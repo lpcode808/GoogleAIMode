@@ -75,8 +75,8 @@ baseUrlInput.addEventListener("change", saveBaseUrl);
 const appendAddon = (addon) => {
   if (!addon) return;
   const current = queryInput.value;
-  const needsSpace = current.length > 0 && !/\s$/.test(current);
-  queryInput.value = `${current}${needsSpace ? " " : ""}${addon}`;
+  const needsSpaceBefore = current.length > 0 && !/\s$/.test(current);
+  queryInput.value = `${current}${needsSpaceBefore ? " " : ""}${addon} `;
 };
 
 chips.forEach((chip) => {
