@@ -5,9 +5,26 @@ const statusEl = document.getElementById("status");
 const pasteBtn = document.getElementById("paste-btn");
 const themeToggle = document.getElementById("theme-toggle");
 const chips = document.querySelectorAll(".chip");
+const launchBtn = form.querySelector('button[type="submit"]');
+const urlError = document.getElementById("url-error");
 
 const DEFAULT_BASE_URL = "https://g.ai";
 const THEME_KEY = "gai_theme";
+
+const validateUrl = (url) => {
+  const trimmed = url.trim();
+  if (!trimmed) return { valid: true, error: "" }; // Empty is OK, will use default
+
+  try {
+    const urlObj = new URL(trimmed);
+    if (!urlObj.protocol.match(/^https?:$/)) {
+      return { valid: false, error: "URL must start with http:// or https://" };
+    }
+    return { valid: true, error: "" };
+  } catch (error) {
+    return { valid: false, error: "Please enter a valid URL" };
+  }
+};
 
 const loadBaseUrl = () => {
   const saved = localStorage.getItem("gai_base_url");
@@ -16,7 +33,19 @@ const loadBaseUrl = () => {
 
 const saveBaseUrl = () => {
   const trimmed = baseUrlInput.value.trim();
+  const validation = validateUrl(trimmed);
+
+  if (!validation.valid) {
+    urlError.textContent = validation.error;
+    baseUrlInput.classList.add("error");
+    return false;
+  }
+
+  urlError.textContent = "";
+  baseUrlInput.classList.remove("error");
   localStorage.setItem("gai_base_url", trimmed || DEFAULT_BASE_URL);
+  statusEl.textContent = "Settings saved.";
+  return true;
 };
 
 const buildUrl = (base, query) => {
@@ -44,11 +73,17 @@ const launchQuery = (query) => {
 
   if (!finalUrl) {
     statusEl.textContent = "Add a base URL in settings first.";
-    return;
+    return false;
   }
 
+  // Show loading state
+  launchBtn.disabled = true;
+  launchBtn.dataset.originalText = launchBtn.textContent;
+  launchBtn.textContent = "Launching...";
   statusEl.textContent = "Opening G.AI…";
+
   window.location.assign(finalUrl);
+  return true;
 };
 
 const applyTheme = (theme) => {
@@ -72,6 +107,18 @@ form.addEventListener("submit", (event) => {
 
 baseUrlInput.addEventListener("change", saveBaseUrl);
 
+// Real-time validation
+baseUrlInput.addEventListener("input", () => {
+  const validation = validateUrl(baseUrlInput.value);
+  if (!validation.valid) {
+    urlError.textContent = validation.error;
+    baseUrlInput.classList.add("error");
+  } else {
+    urlError.textContent = "";
+    baseUrlInput.classList.remove("error");
+  }
+});
+
 const appendAddon = (addon) => {
   if (!addon) return;
   const current = queryInput.value;
@@ -81,7 +128,18 @@ const appendAddon = (addon) => {
 
 chips.forEach((chip) => {
   chip.addEventListener("click", () => {
-    appendAddon(chip.dataset.addon || "");
+    const addon = chip.dataset.addon || "";
+    appendAddon(addon);
+
+    // Visual feedback
+    chip.classList.add("chip-active");
+    setTimeout(() => chip.classList.remove("chip-active"), 300);
+
+    // Status feedback
+    if (addon) {
+      statusEl.textContent = `Added "${addon}" to query.`;
+    }
+
     queryInput.focus();
   });
 });
@@ -98,9 +156,21 @@ pasteBtn.addEventListener("click", async () => {
       statusEl.textContent = "Clipboard is empty.";
       return;
     }
-    queryInput.value = text.trim();
+
+    const current = queryInput.value;
+    const trimmedText = text.trim();
+
+    // If input is empty, replace; otherwise append with space
+    if (current.length === 0) {
+      queryInput.value = trimmedText;
+      statusEl.textContent = "Pasted from clipboard.";
+    } else {
+      const needsSpace = !/\s$/.test(current);
+      queryInput.value = `${current}${needsSpace ? " " : ""}${trimmedText}`;
+      statusEl.textContent = "Added to query.";
+    }
+
     queryInput.focus();
-    statusEl.textContent = "Pasted from clipboard.";
   } catch (error) {
     statusEl.textContent = "Clipboard access denied.";
   }
