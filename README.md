@@ -5,6 +5,7 @@ A mobile-first one-page launcher that appends `q=` to a base G.AI URL and opens 
 ## Features
 
 - **Quick Launch**: Type a query and launch G.AI in a new tab with one tap
+- **Auto-growing Input**: Textarea expands as you type, perfect for long queries (max 6 lines)
 - **Query History**: Automatically saves your last 10 searches for easy re-use
 - **Smart Paste**: Paste from clipboard - appends to existing text instead of replacing
 - **Quick Add-ons**: Pre-defined query modifiers (demystify, explain, analyze)
